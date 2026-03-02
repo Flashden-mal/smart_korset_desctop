@@ -172,7 +172,6 @@ class DoctorView(ctk.CTkFrame):
             return
 
         for p in p_list:
-            # ИСПРАВЛЕНО: border_color заменен на #E0E0E2 для большей четкости
             card = ctk.CTkFrame(self.scroll, height=110, corner_radius=30, fg_color="#FFFFFF", 
                                 border_width=1, border_color="#E0E0E2")
             card.pack(fill="x", pady=8); card.pack_propagate(False)
@@ -185,8 +184,8 @@ class DoctorView(ctk.CTkFrame):
             info.pack(side="left", pady=20)
             ctk.CTkLabel(info, text=p.get('username', 'Неизвестно'), font=("Segoe UI Variable Display", 20, "bold"), text_color="#1D1D1F").pack(anchor="w")
             
-            st_text = p.get('status', 'Новый')
-            st_color = p.get('status_color', '#86868B')
+            st_text = p.get('status', 'В норме')
+            st_color = p.get('status_color', '#34C759')
             ctk.CTkLabel(info, text=f"● {st_text}", font=("Segoe UI Variable", 14, "bold"), text_color=st_color).pack(anchor="w")
 
             ctk.CTkButton(card, text="Карта", width=130, height=44, corner_radius=22, 
@@ -217,4 +216,5 @@ class DoctorView(ctk.CTkFrame):
 
     def open_profile(self, p):
         for child in self.content.winfo_children(): child.destroy()
+        # ВАЖНО: Вызываем новый PatientProfileView
         PatientProfileView(self.content, p, lambda: self.show("p")).pack(fill="both", expand=True)
